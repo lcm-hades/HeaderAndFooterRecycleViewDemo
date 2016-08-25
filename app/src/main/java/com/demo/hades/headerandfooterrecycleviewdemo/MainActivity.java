@@ -21,21 +21,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        List<String> listData = new ArrayList<>();
-//        for (int i=0; i<10; i++){
-//            listData.add("test " + i);
-//        }
-//
-//        first_rv = (RecyclerView) findViewById(R.id.first_rv);
-//
-//        first_rv.setItemAnimator(new DefaultItemAnimator());
-//        first_rv.setHasFixedSize(true);
-//        first_rv.setLayoutManager(new GridLayoutManager(this, 4));
-//
-//        RecyclerViewAdapter adt = new RecyclerViewAdapter(this, listData);
-//        TextView tv = new TextView(this);
-//        tv.setText("kkkkkkkkkkkkkkkkkkkkkk");
-//        adt.addHeaderView(tv);
-//        first_rv.setAdapter(adt);
+        List<String> listData = new ArrayList<>();
+        for (int i=0; i<10; i++){
+            listData.add("test " + i);
+        }
+
+        first_rv = (RecyclerView) findViewById(R.id.first_rv);
+
+        first_rv.setItemAnimator(new DefaultItemAnimator());
+        first_rv.setHasFixedSize(true);
+        first_rv.setLayoutManager(new GridLayoutManager(this, 4));
+
+        RecyclerViewAdapter adt = new RecyclerViewAdapter(this, listData);
+        TextView tv = new TextView(this);
+        tv.setText("kkkkkkkkkkkkkkkkkkkkkk");
+        adt.addHeaderView(tv);
+        first_rv.setAdapter(adt);
     }
 }

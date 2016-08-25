@@ -30,7 +30,7 @@ public abstract class BaseRecyclerViewAdaptor<T> extends RecyclerView.Adapter<Re
     }
 
     private boolean isFooterViewPos(int position){
-        return position >= getFootersCount();
+        return position >= getRealItemCount() + getHeadersCount();
     }
 
     public void addHeaderView(View view){
