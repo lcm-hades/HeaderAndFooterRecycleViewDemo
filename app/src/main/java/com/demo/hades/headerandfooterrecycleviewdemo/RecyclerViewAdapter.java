@@ -7,25 +7,28 @@ import android.view.ViewGroup;
 /**
  * Created by Hades on 2016/8/25.
  */
-public class RecyclerViewAdapter extends BaseRecyclerViewAdaptor<RecyclerView.ViewHolder> {
+public class RecyclerViewAdapter extends BaseRecyclerViewAdaptor {
 
 
-    public RecyclerViewAdapter(Context context, RecyclerView.Adapter adapter) {
-        super(context, adapter);
+    @Override
+    protected RecyclerView.ViewHolder onCreate(ViewGroup viewGroup, int itemtype) {
+
+        return null;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        return super.onCreateViewHolder(viewGroup, i);
+    protected void onRealBindViewHolder(RecyclerView.ViewHolder viewHolder, int pos) {
+
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        super.onBindViewHolder(viewHolder, i);
+    protected int getRealItemCount() {
+        return 0;
     }
 
     @Override
-    public int getItemCount() {
-        return super.getItemCount();
+    protected int getRealItemViewType(int pos) {
+        return 0;
     }
+
 }

@@ -12,19 +12,18 @@ import android.view.ViewGroup;
 /**
  * Created by Hades on 2016/8/24.
  */
-public class BaseRecyclerViewAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class BaseRecyclerViewAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int ITEM_HEADER = 0x110;
-    private static final int ITEM_FOOTER = 0x111;
+    protected static final int ITEM_NORMAL = 0;
+    protected static final int ITEM_HEADER = 1000;
+    protected static final int ITEM_FOOTER = 2000;
+
+
 
     private SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();
     private SparseArrayCompat<View> mFooterViews = new SparseArrayCompat<>();
 
     private RecyclerView.Adapter mInnerAdapter;
-
-    public BaseRecyclerViewAdaptor(Context context,RecyclerView.Adapter adapter){
-        mInnerAdapter = adapter;
-    }
 
     private boolean isHeaderViewPos(int position){
         return position < getHeadersCount();
@@ -51,6 +50,18 @@ public class BaseRecyclerViewAdaptor<T> extends RecyclerView.Adapter<RecyclerVie
     }
 
 
+    protected abstract RecyclerView.ViewHolder onCreate(ViewGroup viewGroup, int itemtype);
+    protected abstract void onRealBindViewHolder(RecyclerView.ViewHolder viewHolder, int pos);
+    protected abstract int getRealItemCount();
+    protected abstract int getRealItemViewType(int pos);
+
+    /**
+     *
+     * @param viewGroup
+     * @param i itemtype
+     * @return
+     */
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 
@@ -62,7 +73,7 @@ public class BaseRecyclerViewAdaptor<T> extends RecyclerView.Adapter<RecyclerVie
             return holder;
         }
 
-        return mInnerAdapter.onCreateViewHolder(viewGroup, i);
+        return onCreate(viewGroup, i);
     }
 
     @Override
@@ -73,24 +84,15 @@ public class BaseRecyclerViewAdaptor<T> extends RecyclerView.Adapter<RecyclerVie
             return mFooterViews.keyAt(position - getHeadersCount() -getRealItemCount());
         }
 
-        return mInnerAdapter.getItemViewType(position - getHeadersCount());
-    }
-
-    private int getRealItemCount(){
-        return mInnerAdapter.getItemCount();
+        return getRealItemViewType(position - getHeadersCount());
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        if (isHeaderViewPos(i)){
+        if (isHeaderViewPos(i) || isFooterViewPos(i)){
             return;
         }
-        if (isFooterViewPos(i)){
-            return;
-        }
-
-        mInnerAdapter.onBindViewHolder(viewHolder, i - getHeadersCount());
-
+        onRealBindViewHolder(viewHolder, i - getHeadersCount());
     }
 
     @Override
